@@ -1,12 +1,12 @@
-/* src/components/Navbar.css */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    background: #007bff;
-    padding: 10px 20px;
-    color: white;
+    background: var(--navbar-background);
+    padding: 15px 20px;
+    color: var(--navbar-text-color);
+    box-shadow: 0 2px 4px rgba(155, 150, 150, 0.1);
   }
   
   .title {
@@ -14,15 +14,34 @@
     font-weight: bold;
   }
   
+  .search-container {
+    display: flex;
+    align-items: center;
+    width: 40%;
+  }
+  
+  .search-icon {
+    margin-right: 10px;
+  }
+  
   .search-bar {
-    padding: 5px;
+    padding: 10px; /* Add padding to make it wider vertically */
     border-radius: 5px;
     border: none;
+    width: 100%;
+    outline: none;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
   .filter-sort-dropdown {
     padding: 5px;
-    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
   }
   
   .theme-toggle {
@@ -30,6 +49,15 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: white;
+    color: var(--navbar-text-color);
   }
   
+  @media (max-width: 768px) {
+    .search-container {
+      width: 60%;
+    }
+  
+    .filter-sort-dropdown {
+      display: none;
+    }
+  }

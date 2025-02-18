@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaCalendarAlt, FaPlus } from "react-icons/fa";
 import "./TaskInput.css";
 
 const TaskInput = ({ addTask }) => {
@@ -26,14 +27,18 @@ const TaskInput = ({ addTask }) => {
       />
       {showOptions && (
         <div className="task-options">
-          <button onClick={() => document.getElementById("due-date").showPicker()}>📅</button>
+          <button onClick={() => document.getElementById("due-date").showPicker()}>
+            <FaCalendarAlt />
+          </button>
           <input
             type="date"
             id="due-date"
             style={{ display: "none" }}
             onChange={(e) => setDueDate(e.target.value)}
           />
-          <button className="add-task-button" onClick={handleAddTask}>Add Task</button>
+          <button className="add-task-button" onClick={handleAddTask}>
+            <FaPlus /> Add Task
+          </button>
         </div>
       )}
     </div>

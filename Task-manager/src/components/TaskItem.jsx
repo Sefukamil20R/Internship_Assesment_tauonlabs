@@ -1,54 +1,5 @@
-// import React, { useState } from "react";
-
-// const TaskItem = ({ task, updateTask }) => {
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-//   const toggleCompletion = () => {
-//     updateTask((prevTasks) =>
-//       prevTasks.map((t) =>
-//         t.id === task.id ? { ...t, completed: !t.completed } : t
-//       )
-//     );
-//   };
-
-//   const removeTask = () => {
-//     updateTask((prevTasks) => prevTasks.filter((t) => t.id !== task.id));
-//   };
-
-//   return (
-//     <li className="task-item">
-//       <div className="task-content">
-//         <input
-//           type="checkbox"
-//           checked={task.completed}
-//           onChange={toggleCompletion}
-//           className="task-checkbox"
-//         />
-//         <span className={`task-title ${task.completed ? "completed" : ""}`}>
-//           {task.title}
-//         </span>
-//         <span className="task-due">{task.dueDate}</span>
-//       </div>
-//       <div className="task-actions">
-//         <button
-//           onClick={() => setIsMenuOpen(!isMenuOpen)}
-//           className="menu-button"
-//         >
-//           ...
-//         </button>
-//         {isMenuOpen && (
-//           <ul className="action-menu">
-//             <li onClick={toggleCompletion}>Mark as Completed</li>
-//             <li onClick={removeTask}>Remove</li>
-//           </ul>
-//         )}
-//       </div>
-//     </li>
-//   );
-// };
-
-// export default TaskItem;
 import React, { useState } from "react";
+import { FaCheck, FaClock, FaTrash, FaEllipsisV, FaEdit, FaSave } from "react-icons/fa";
 import "./TaskItem.css";
 
 const TaskItem = ({ task, updateTaskStatus, deleteTask, editTask }) => {
@@ -56,16 +7,37 @@ const TaskItem = ({ task, updateTaskStatus, deleteTask, editTask }) => {
   const [newText, setNewText] = useState(task.text);
   const [newDueDate, setNewDueDate] = useState(task.dueDate);
   const [showMenu, setShowMenu] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleEdit = () => {
     editTask(task.id, newText, newDueDate);
     setIsEditing(false);
   };
 
+  const handleComplete = () => {
+    setIsCompleted(true);
+    setShowPopup(true);
+    setTimeout(() => {
+      updateTaskStatus(task.id, "completed");
+      setIsCompleted(false);
+      setShowPopup(false);
+    }, 2000);
+  };
+
+  const handleDelete = () => {
+    setIsDeleted(true);
+    setTimeout(() => {
+      deleteTask(task.id);
+      setIsDeleted(false);
+    }, 1000);
+  };
+
   return (
-    <div className="task-item">
+    <div className={`task-item ${isCompleted ? "completed" : ""} ${isDeleted ? "deleted" : ""}`}>
       {isEditing ? (
-        <div>
+        <div className="edit-container">
           <input
             type="text"
             value={newText}
@@ -76,25 +48,25 @@ const TaskItem = ({ task, updateTaskStatus, deleteTask, editTask }) => {
             value={newDueDate}
             onChange={(e) => setNewDueDate(e.target.value)}
           />
-          <button onClick={handleEdit}>Save</button>
+          <button onClick={handleEdit}><FaSave /></button>
         </div>
       ) : (
         <div>
           <p>{task.text}</p>
           <small>Due: {task.dueDate || "No due date"}</small>
-          <button onClick={() => setIsEditing(true)}>✏️</button>
+          <button onClick={() => setIsEditing(true)}><FaEdit /></button>
         </div>
       )}
       <div>
-        <button onClick={() => setShowMenu(!showMenu)}>☰</button>
+        <button onClick={() => setShowMenu(!showMenu)}><FaEllipsisV /></button>
         {showMenu && (
           <div className="task-menu">
-            <button onClick={() => updateTaskStatus(task.id, "completed")}>✅</button>
-            <button onClick={() => updateTaskStatus(task.id, "pending")}>⏳</button>
-            <button onClick={() => deleteTask(task.id)}>❌</button>
+            <button onClick={handleComplete} className="complete-icon"><FaCheck /></button>
+            <button onClick={handleDelete} className="delete-icon"><FaTrash /></button>
           </div>
         )}
       </div>
+      {showPopup && <div className="popup">Task Completed! 🎉</div>}
     </div>
   );
 };

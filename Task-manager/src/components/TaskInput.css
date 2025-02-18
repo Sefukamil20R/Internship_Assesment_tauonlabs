@@ -4,26 +4,35 @@
     gap: 10px;
     margin: 20px 0;
     width: 100%;
+    margin-right: 20px; /* Add margin to the right */
   }
   
   .task-input input {
-    padding: 5px;
+    padding: 10px;
     width: 100%;
     border-radius: 5px;
     border: 1px solid #ccc;
+    outline: none;
   }
   
   .task-options {
     display: flex;
-    justify-content: space-between;
-    
+    gap: 10px;
+    justify-content: center;
   }
   
   .add-task-button {
-    background: #007bff;
+    background: #2c3e50 ;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .add-task-button svg {
+    margin-right: 5px;
   }
