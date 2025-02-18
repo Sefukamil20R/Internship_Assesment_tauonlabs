@@ -52,7 +52,7 @@ Ensure you have the following installed:
    ```  
 3. **Start the development server:**  
    ```sh  
-   npm start  # or yarn start  
+   npm run dev  # or yarn start  
    ```  
 4. Open your browser and visit: **`http://localhost:3000/`**  
 
